@@ -1,6 +1,7 @@
 public class JavaApplication42 {
     public static void main(String[] args) throws IOException {
     ArrayList<String> list = new ArrayList<>();
+    int count=0;
     BufferedReader bufreader= new BufferedReader
         (new FileReader("C:/Users/lijie/Downloads/extracted_log (2)"));
     String line= bufreader.readLine();
@@ -11,10 +12,13 @@ public class JavaApplication42 {
     bufreader.close();
     
     for(int i=0; i<list.size();i++ ){
-        System.out.println(list.get(i));
+       list.get(i).equals("_job_complete");
+      count++;
+        }
+        System.out.println("Number of jobs completed: ");
+        System.out.println(count);
     }
     } 
-}
 
 
 // this code is by Li Jie
