@@ -1,0 +1,22 @@
+public class JavaApplication42 {
+    public static void main(String[] args) throws IOException {
+    ArrayList<String> list = new ArrayList<>();
+    BufferedReader bufreader= new BufferedReader
+        (new FileReader("C:/Users/lijie/Downloads/extracted_log (2)"));
+    String line= bufreader.readLine();
+    while(line!=null){
+        list.add(line);
+        line=bufreader.readLine();
+    }
+    bufreader.close();
+    
+    for(int i=0; i<list.size();i++ ){
+        System.out.println(list.get(i));
+    }
+    } 
+}
+
+
+// this code is by Li Jie
+// this is to read log file into array list
+// change public class and file directory to run this file
