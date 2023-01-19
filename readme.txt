@@ -6,7 +6,7 @@ This is Kevin's workspace
 
 --------- PROGRAM GUIDE ---------
 
-
+Refer to instructions in form of comments in Code > Main.java
 
 --------- PROGRESS JOURNAL ---------
 
