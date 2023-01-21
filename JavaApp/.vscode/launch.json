@@ -1,0 +1,43 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch NumberOfJobs",
+            "request": "launch",
+            "mainClass": "code.NumberOfJobs",
+            "projectName": "JavaApp_e9e23efe"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "code.Main",
+            "projectName": "JavaApp_e9e23efe"
+        },
+        {
+            "type": "java",
+            "name": "Launch Partition",
+            "request": "launch",
+            "mainClass": "code.Partition",
+            "projectName": "JavaApp_e9e23efe",
+            "vmArgs": "--module-path \"C:\\Users\\LocalAdmin\\Downloads\\javafx-sdk-19.0.2\\lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "JavaApp_e9e23efe"
+        }
+    ]
+}
