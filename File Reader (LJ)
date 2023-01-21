@@ -12,12 +12,7 @@ public class JavaApplication42 {
     bufreader.close();
     
     for(int i=0; i<list.size();i++ ){
-       list.get(i).equals("_job_complete");
-      count++;
-        }
-        System.out.println("Number of jobs completed: ");
-        System.out.println(count);
-    }
+      
     } 
 
 
