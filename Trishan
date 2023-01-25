@@ -1,4 +1,6 @@
- import java.io.File;
+package code;
+
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,22 +14,31 @@ import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;  
 import javafx.stage.Stage;
 
-public class Partition extends Application{  
-@Override  
+public class Partition extends Application{     
 
+    private static String fileDirectory;
+
+    public Partition(){}
+
+    public Partition(String a){
+        fileDirectory = a;
+    }
+
+    public void display(){
+        launch();
+    }
+   
+@Override  
 public void start(Stage stage) throws Exception {  
       
     CategoryAxis xaxis = new CategoryAxis();  
     NumberAxis yaxis = new NumberAxis(0,2500,100);  // Set the value for y-axis
     xaxis.setLabel("Months");                       // Label x-axis
-    yaxis.setLabel("Total Number of Jobs");         //Label y-axis
+    yaxis.setLabel("Total number of jobs");         //Label y-axis
       
     //Configuring StackedBarChart   
     StackedBarChart sb = new StackedBarChart(xaxis,yaxis);  
-    sb.setTitle("Number Of Jobs By Partitions");  
-       
-    String fileName = "C:/extracted_log";       // Get File Name
-        File file = new File(fileName);
+    sb.setTitle("Number of jobs by partitions");  
         
        ArrayList<String> EPYC = new ArrayList<String>();            //Setting the array list according to the partitons
         ArrayList<String> OPT = new ArrayList<String>();
@@ -37,8 +48,7 @@ public void start(Stage stage) throws Exception {
            ArrayList<String> GK40 = new ArrayList<String>();
         
            try {
-          
-            Scanner scanner = new Scanner(file);
+            Scanner scanner = new Scanner(new FileInputStream(fileDirectory));
             // read each line of the file
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -59,6 +69,7 @@ public void start(Stage stage) throws Exception {
                      GK40.add(line); 
                 }              
             }
+            scanner.close();
 
         // The sorted array list using the partition will be send to their method to count according the months.
         ArrayList<Integer> CountEpyc  =Epyc(EPYC);
@@ -67,6 +78,14 @@ public void start(Stage stage) throws Exception {
         ArrayList<Integer> CountGv100=Gv100(GV100);
         ArrayList<Integer> CountGtit  =Gtit(GTIT);
         ArrayList<Integer> CountGk40=Gk40(GK40);
+        
+          //Display all value
+        display_value(CountEpyc,0);
+        display_value(CountOpt,1);
+        display_value(CountGk10,2);
+        display_value(CountGv100,3);
+        display_value(CountGtit,4);
+        display_value(CountGk40,5);
 
     //Adding the value in the chart.    
     XYChart.Series epyc = new XYChart.Series<>();  
@@ -143,14 +162,25 @@ public void start(Stage stage) throws Exception {
       
 }  
         catch (FileNotFoundException e) {
-            System.out.println("File not found: " + fileName);
+            System.out.println("File not found");
         }
 }
-    
-public static void main(String[] args) {  
-    launch(args);  
-} 
 
+public void display_value(ArrayList<Integer> display_all,int num){
+    
+    String[] month = {"June", "July", "August", "September","October","November","December"};
+    String[] partition = {"CPU-EPYC", "CPU-OPTERON", "GPU-K10", "GPU-V100S","GPU-TITAN","GPU-K40"};
+    int total=0;
+    System.out.println("Number of "+partition[num]);
+    System.out.println("**************************");
+    for(int a=0;a<7;a++){
+         System.out.println(month[a]+": "+display_all.get(a));
+         total+=display_all.get(a);
+    }
+     System.out.println("\nTotal: "+total);
+    System.out.println();
+
+}
 //To filter EPYC by month
 public static ArrayList<Integer> Epyc(ArrayList<String> Num){ 
      
@@ -431,3 +461,4 @@ public static ArrayList<Integer> Gk40(ArrayList<String> Num){
             
         return final_gk40;}
 } 
+
