@@ -1,6 +1,6 @@
 package code;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -16,18 +16,18 @@ import javafx.stage.Stage;
 
 public class Partition extends Application{     
 
-    private String fileDirectory;
+    private static String fileDirectory;
 
     public Partition(){}
 
-    public Partition(String fileDirectory){
-        this.fileDirectory = fileDirectory;
+    public Partition(String a){
+        fileDirectory = a;
     }
 
     public void display(){
         launch();
     }
-
+   
 @Override  
 public void start(Stage stage) throws Exception {  
       
@@ -39,9 +39,6 @@ public void start(Stage stage) throws Exception {
     //Configuring StackedBarChart   
     StackedBarChart sb = new StackedBarChart(xaxis,yaxis);  
     sb.setTitle("Number of jobs by partitions");  
-       
-    String fileName = "D://FOP//SLURM-Log-Analysis//extracted_log";       // Get File Name
-        File file = new File(fileName);
         
        ArrayList<String> EPYC = new ArrayList<String>();            //Setting the array list according to the partitons
         ArrayList<String> OPT = new ArrayList<String>();
@@ -51,8 +48,7 @@ public void start(Stage stage) throws Exception {
            ArrayList<String> GK40 = new ArrayList<String>();
         
            try {
-          
-            Scanner scanner = new Scanner(file);
+            Scanner scanner = new Scanner(new FileInputStream(fileDirectory));
             // read each line of the file
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -82,6 +78,14 @@ public void start(Stage stage) throws Exception {
         ArrayList<Integer> CountGv100=Gv100(GV100);
         ArrayList<Integer> CountGtit  =Gtit(GTIT);
         ArrayList<Integer> CountGk40=Gk40(GK40);
+        
+          //Display all value
+        display_value(CountEpyc,0);
+        display_value(CountOpt,1);
+        display_value(CountGk10,2);
+        display_value(CountGv100,3);
+        display_value(CountGtit,4);
+        display_value(CountGk40,5);
 
     //Adding the value in the chart.    
     XYChart.Series epyc = new XYChart.Series<>();  
@@ -158,10 +162,25 @@ public void start(Stage stage) throws Exception {
       
 }  
         catch (FileNotFoundException e) {
-            System.out.println("File not found: " + fileName);
+            System.out.println("File not found");
         }
 }
 
+public void display_value(ArrayList<Integer> display_all,int num){
+    
+    String[] month = {"June", "July", "August", "September","October","November","December"};
+    String[] partition = {"CPU-EPYC", "CPU-OPTERON", "GPU-K10", "GPU-V100S","GPU-TITAN","GPU-K40"};
+    int total=0;
+    System.out.println("Number of "+partition[num]);
+    System.out.println("**************************");
+    for(int a=0;a<7;a++){
+         System.out.println(month[a]+": "+display_all.get(a));
+         total+=display_all.get(a);
+    }
+     System.out.println("\nTotal: "+total);
+    System.out.println();
+
+}
 //To filter EPYC by month
 public static ArrayList<Integer> Epyc(ArrayList<String> Num){ 
      
@@ -442,3 +461,4 @@ public static ArrayList<Integer> Gk40(ArrayList<String> Num){
             
         return final_gk40;}
 } 
+
